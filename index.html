@@ -2,101 +2,131 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Valentine’s Quiz for C'RI 💖</title>
 
 <style>
-    body {
-        font-family: 'Segoe UI', sans-serif;
-        background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
-        margin: 0;
-        padding: 20px;
-        overflow-x: hidden;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    h1 {
-        text-align: center;
-        color: #b30059;
-    }
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
+    margin: 0;
+    padding: 15px;
+    overflow-x: hidden;
+}
 
-    .photo-box {
-        text-align: center;
-        margin-bottom: 20px;
-    }
+h1 {
+    text-align: center;
+    color: #b30059;
+    font-size: clamp(22px, 5vw, 32px);
+}
 
-    .photo-box img {
-        width: 180px;
-        height: 180px;
-        object-fit: cover;
-        border-radius: 50%;
-        border: 5px solid #ff66a3;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-    }
+.photo-box {
+    text-align: center;
+    margin-bottom: 15px;
+}
 
-    .photo-box p {
-        color: #b30059;
-        font-size: 18px;
-        margin-top: 10px;
-    }
+.photo-box img {
+    width: 150px;
+    height: 150px;
+    max-width: 40vw;
+    max-height: 40vw;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #ff66a3;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
 
-    .quiz {
-        max-width: 700px;
-        margin: auto;
-        background: white;
-        padding: 25px;
-        border-radius: 15px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
+.photo-box p {
+    color: #b30059;
+    font-size: 18px;
+    margin-top: 8px;
+}
 
-    .question {
-        display: none;
-    }
+.quiz {
+    max-width: 720px;
+    margin: auto;
+    background: #fff;
+    padding: clamp(15px, 4vw, 25px);
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
 
-    .question.active {
-        display: block;
-    }
+.question {
+    display: none;
+}
 
-    .question h3 {
-        color: #cc0066;
-    }
+.question.active {
+    display: block;
+}
 
-    .options label {
-        display: block;
-        padding: 10px;
-        margin: 8px 0;
-        border-radius: 8px;
-        cursor: pointer;
-        border: 1px solid #ddd;
-        transition: 0.3s;
-    }
+.question h3 {
+    color: #cc0066;
+    font-size: clamp(18px, 4.5vw, 22px);
+}
 
-    .options label:hover {
-        background: #ffe6f0;
-    }
+.options label {
+    display: block;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    transition: all 0.25s ease;
+    font-size: 16px;
+}
 
-    input[type="radio"] {
-        margin-right: 10px;
-    }
+.options label:hover {
+    background: #ffe6f0;
+}
 
-    .flower {
-        position: fixed;
-        top: -50px;
-        font-size: 24px;
-        animation: fall linear forwards;
-        z-index: 9999;
-    }
+input[type="radio"] {
+    margin-right: 10px;
+}
 
-    @keyframes fall {
-        to {
-            transform: translateY(110vh) rotate(360deg);
-            opacity: 0;
-        }
-    }
+.message {
+    margin-top: 10px;
+    font-size: 15px;
+    color: #cc0000;
+    display: none;
+}
 
-    .end {
-        text-align: center;
-        font-size: 22px;
-        color: #b30059;
+.shake {
+    animation: shake 0.4s;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+    75% { transform: translateX(-5px); }
+    100% { transform: translateX(0); }
+}
+
+/* Flower animation */
+.flower {
+    position: fixed;
+    top: -40px;
+    font-size: 24px;
+    animation: fall linear forwards;
+    z-index: 9999;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
     }
+}
+
+.end {
+    text-align: center;
+    font-size: clamp(18px, 4vw, 24px);
+    color: #b30059;
+}
 </style>
 </head>
 
@@ -105,82 +135,95 @@
 <h1>💘 Valentine’s Quiz for C'RI 💘</h1>
 
 <div class="photo-box">
-    <img src="cri.png" alt="C'RI">
+    <img src="cri.jpg" alt="C'RI">
     <p>My Beautiful C'RI ❤️</p>
 </div>
 
 <div class="quiz">
 
+    <!-- Question 1 -->
     <div class="question active">
         <h3>1. What makes me fall for C'RI every day?</h3>
         <div class="options">
-            <label><input type="radio" name="q1" onclick="wrong(this)">Her attitude</label>
-            <label><input type="radio" name="q1" onclick="correct(this)">Her smile 💕</label>
-            <label><input type="radio" name="q1" onclick="wrong(this)">Her phone</label>
-            <label><input type="radio" name="q1" onclick="wrong(this)">Her silence</label>
+            <label><input type="radio" onclick="wrong(this)">Her attitude</label>
+            <label><input type="radio" onclick="correct(this)">Her smile 💕</label>
+            <label><input type="radio" onclick="wrong(this)">Her phone</label>
+            <label><input type="radio" onclick="wrong(this)">Her silence</label>
         </div>
+        <div class="message">Try again 😘</div>
     </div>
 
+    <!-- Question 2 -->
     <div class="question">
-        <h3>2. What is my favorite moment with C'RI?</h3>
+        <h3>2. My favorite moment with C'RI?</h3>
         <div class="options">
-            <label><input type="radio" name="q2" onclick="wrong(this)">Watching reels</label>
-            <label><input type="radio" name="q2" onclick="wrong(this)">Eating food</label>
-            <label><input type="radio" name="q2" onclick="correct(this)">Talking endlessly ❤️</label>
-            <label><input type="radio" name="q2" onclick="wrong(this)">Sleeping</label>
+            <label><input type="radio" onclick="wrong(this)">Watching reels</label>
+            <label><input type="radio" onclick="correct(this)">Talking endlessly ❤️</label>
+            <label><input type="radio" onclick="wrong(this)">Eating food</label>
+            <label><input type="radio" onclick="wrong(this)">Sleeping</label>
         </div>
+        <div class="message">Nope 😄 Try again</div>
     </div>
 
+    <!-- Question 3 -->
     <div class="question">
         <h3>3. What do I love most about C'RI?</h3>
         <div class="options">
-            <label><input type="radio" name="q3" onclick="wrong(this)">Her anger</label>
-            <label><input type="radio" name="q3" onclick="correct(this)">Her caring heart 💞</label>
-            <label><input type="radio" name="q3" onclick="wrong(this)">Her jokes</label>
-            <label><input type="radio" name="q3" onclick="wrong(this)">Her food choices</label>
+            <label><input type="radio" onclick="wrong(this)">Her anger</label>
+            <label><input type="radio" onclick="correct(this)">Her caring heart 💞</label>
+            <label><input type="radio" onclick="wrong(this)">Her jokes</label>
+            <label><input type="radio" onclick="wrong(this)">Her food choices</label>
         </div>
+        <div class="message">Almost 😍 Try once more</div>
     </div>
 
+    <!-- Question 4 -->
     <div class="question">
         <h3>4. What matters most to me?</h3>
         <div class="options">
-            <label><input type="radio" name="q4" onclick="wrong(this)">Mobile</label>
-            <label><input type="radio" name="q4" onclick="wrong(this)">Career</label>
-            <label><input type="radio" name="q4" onclick="correct(this)">C'RI 😘</label>
-            <label><input type="radio" name="q4" onclick="wrong(this)">Sleep</label>
+            <label><input type="radio" onclick="wrong(this)">Mobile</label>
+            <label><input type="radio" onclick="correct(this)">C'RI 😘</label>
+            <label><input type="radio" onclick="wrong(this)">Career</label>
+            <label><input type="radio" onclick="wrong(this)">Sleep</label>
         </div>
+        <div class="message">Wrong answer 😜</div>
     </div>
 
+    <!-- Question 5 -->
     <div class="question">
         <h3>5. Will C'RI be my Valentine forever?</h3>
         <div class="options">
-            <label><input type="radio" name="q5" onclick="correct(this)">Yes, always 💍</label>
-            <label><input type="radio" name="q5" onclick="correct(this)">Forever & ever 💖</label>
-            <label><input type="radio" name="q5" onclick="correct(this)">No escape 😄</label>
-            <label><input type="radio" name="q5" onclick="correct(this)">100% YES 🌹</label>
+            <label><input type="radio" onclick="correct(this)">Yes, always 💍</label>
+            <label><input type="radio" onclick="correct(this)">Forever & ever 💖</label>
+            <label><input type="radio" onclick="correct(this)">100% YES 🌹</label>
+            <label><input type="radio" onclick="correct(this)">No escape 😄</label>
         </div>
     </div>
 
+    <!-- End -->
     <div class="question end">
-        💞 Thank you C'RI 💞 <br>
-        You are my forever Valentine ❤️
+        💞 Thank you C'RI 💞<br>
+        You are my today, tomorrow & forever ❤️
     </div>
 
 </div>
 
 <script>
 function correct(el) {
-    disableOptions(el);
+    disableAll(el);
     flowers();
-    nextQuestion(el);
+    setTimeout(() => nextQuestion(el), 800);
 }
 
 function wrong(el) {
-    disableOptions(el);
-    nextQuestion(el);
+    const q = el.closest(".question");
+    const msg = q.querySelector(".message");
+    q.classList.add("shake");
+    msg.style.display = "block";
+    setTimeout(() => q.classList.remove("shake"), 400);
 }
 
-function disableOptions(el) {
+function disableAll(el) {
     el.closest(".options")
       .querySelectorAll("input")
       .forEach(i => i.disabled = true);
@@ -188,21 +231,19 @@ function disableOptions(el) {
 
 function nextQuestion(el) {
     const current = el.closest(".question");
-    setTimeout(() => {
-        current.classList.remove("active");
-        current.nextElementSibling?.classList.add("active");
-    }, 800);
+    current.classList.remove("active");
+    current.nextElementSibling?.classList.add("active");
 }
 
 function flowers() {
     for (let i = 0; i < 15; i++) {
-        const flower = document.createElement("div");
-        flower.className = "flower";
-        flower.innerHTML = "🌸";
-        flower.style.left = Math.random() * 100 + "vw";
-        flower.style.animationDuration = (Math.random() * 2 + 3) + "s";
-        document.body.appendChild(flower);
-        setTimeout(() => flower.remove(), 5000);
+        const f = document.createElement("div");
+        f.className = "flower";
+        f.innerHTML = "🌸";
+        f.style.left = Math.random() * 100 + "vw";
+        f.style.animationDuration = (Math.random() * 2 + 3) + "s";
+        document.body.appendChild(f);
+        setTimeout(() => f.remove(), 5000);
     }
 }
 </script>
